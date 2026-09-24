@@ -1,4 +1,4 @@
-package Lectures.Lecture0_0910;
+package Lectures.Lecture00_0910;
 
 public class Path {
 
