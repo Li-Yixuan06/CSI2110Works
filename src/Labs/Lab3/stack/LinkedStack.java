@@ -10,12 +10,16 @@ package Labs.Lab3.stack;
 
 public class LinkedStack<E> implements Stack<E> {
 
+
+
+
+
   // ---------------- nested Node class ----------------
   /**
    * Node of a singly linked list, which stores a reference to its element and to
    * the subsequent node in the list (or null if this is the last node).
    */
-  private static class Node<E> {
+  private static class Node<E> { // Singly Node
     private E element; // reference to the element stored at this node
     private Node<E> next; // reference to the subsequent node in the list
 
@@ -23,7 +27,7 @@ public class LinkedStack<E> implements Stack<E> {
      * Creates a node with the given element and next node.
      */
 
-    public Node(E e, Node<E> n) {
+    public Node(E e, Node<E> n) { // constructor of Node
       element = e;
       next = n;
     }
@@ -31,21 +35,27 @@ public class LinkedStack<E> implements Stack<E> {
     // Accessor methods
     public E getElement() {
       return element;
-    }
+    } // Return the element of a Node
 
     public Node<E> getNext() {
       return next;
-    }
+    } // Return the next Node of a Node
 
     // Modifier method
     public void setNext(Node<E> n) {
       next = n;
-    }
+    } // Set the next Node
   } // ----------- end of nested Node class -----------
+
+
+
+
+
+
 
   // instance variables of the LinkedStack
 
-  private Node<E> head = null;
+  private Node<E> head = null; // no dummy
 
   private int size = 0; // number of nodes in the stack
 
@@ -77,7 +87,16 @@ public class LinkedStack<E> implements Stack<E> {
    * @param element the element to be inserted
    */
   public void push(E element) {
-    // this is a dummy method now; it needs to be implemented <<<<<<<<<<<<<<<
+    // implemented <<<<<<<<<<<<<<<
+    if (isEmpty()) {
+      head = new Node<E>(element, null);
+      size++;
+    } else {
+      Node<E> temp = new Node<E>(element, head);
+      head = temp;
+      size++;
+    }
+
   }
 
   /**
@@ -86,7 +105,12 @@ public class LinkedStack<E> implements Stack<E> {
    * @return top element in the stack (or null if empty)
    */
   public E top() {
-    return null; // this is a dummy method now; it needs to be implemented <<<<<<<<<<<<<<<
+    // implemented <<<<<<<<<<<<<<<
+    if (isEmpty()) {
+      return null;
+    } else {
+      return head.getElement();
+    }
   }
 
   /**
@@ -95,7 +119,15 @@ public class LinkedStack<E> implements Stack<E> {
    * @return element removed (or null if empty)
    */
   public E pop() {
-    return null; // this is a dummy method now; it needs to be implemented <<<<<<<<<<<<<<<
+    // implemented <<<<<<<<<<<<<<<
+    if (isEmpty()) {
+      return null;
+    } else {
+      Node<E> temp = head;
+      head = head.getNext();
+      size--;
+      return temp.getElement();
+    }
   }
 
   /**
