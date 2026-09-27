@@ -5,3 +5,17 @@ abc //true
 
 (() //false
 10^100*log_10[n)/log_10(2) //false
+
+() //true
+([]) //true
+{a + (b * c)} //true
+( //false
+) //false
+([)] //false
+no brackets //true
+) //false
+] //false
+} //false
+()) //false
+{[(])} //false
+{[()]} //true
