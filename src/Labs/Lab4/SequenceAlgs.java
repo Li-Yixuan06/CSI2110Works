@@ -15,11 +15,28 @@ public class SequenceAlgs<E> {
 	 */
 	
 	public boolean isPalindrome (Sequence<E> S) {
-		
-		// ***** add your code here  *******************
-		
-		return true;
- 		
+
+		if (S == null) {
+			return false;
+		}
+		if (S.size() < 2) {
+			return true;
+		}
+
+		Position<E> frontPointer = S.first();
+		Position<E> rearPointer = S.last();
+
+		while (frontPointer.getElement().equals(rearPointer.getElement()) && S.after(frontPointer) != null) {
+			frontPointer = S.after(frontPointer);
+			rearPointer = S.before(rearPointer);
+		}
+
+		if (S.after(frontPointer) == null) {
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 	
 	
@@ -34,8 +51,16 @@ public class SequenceAlgs<E> {
 	 */
 	
 	public void inplaceReverse(Sequence<E> S) {
-		
-		// ***** add your code here  *******************
+
+		Position<E> frontPointer = S.first();
+		Position<E> rearPointer = S.last();
+		for (int i = 0; i < S.size() / 2; i++) {
+			E temp = frontPointer.getElement();
+			S.set(frontPointer, rearPointer.getElement());
+			S.set(rearPointer, temp);
+			frontPointer = S.after(frontPointer);
+			rearPointer = S.before(rearPointer);
+		}
 		
 	}
 	
@@ -50,8 +75,48 @@ public class SequenceAlgs<E> {
 	 */
 	
 	public void inplaceKReverse(Sequence<E> S,int k) {
-		
-		// ***** add your code here  *******************
+
+		if (k <= 0) {
+			return;
+		}
+
+		for (int i = 0; i < S.size(); i =  i + k) {
+
+			if (i + k < S.size()) {
+
+				Position<E> frontPointer = S.positionAtIndex(i);
+				Position<E> rearPointer = S.positionAtIndex(i + k - 1);
+
+				for (int j = 0; j < k / 2; j++) {
+
+					E temp = frontPointer.getElement();
+
+					S.set(frontPointer, rearPointer.getElement());
+					S.set(rearPointer, temp);
+
+					frontPointer = S.after(frontPointer);
+					rearPointer = S.before(rearPointer);
+
+				}
+
+			} else {
+				Position<E> frontPointer = S.positionAtIndex(i);
+				Position<E> rearPointer = S.positionAtIndex(S.size() - 1);
+
+				for (int j = 0; j < (S.size() - i) / 2; j++) {
+
+					E temp = frontPointer.getElement();
+
+					S.set(frontPointer, rearPointer.getElement());
+					S.set(rearPointer, temp);
+
+					frontPointer = S.after(frontPointer);
+					rearPointer = S.before(rearPointer);
+
+				}
+			}
+
+		}
 		    	
 	}
 	

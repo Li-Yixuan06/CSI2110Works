@@ -22,15 +22,16 @@ public class LinkedSequence<E> extends LinkedPositionalList<E> implements Sequen
 	 * @return position of the element or null if index does not exist
 	 * @throws IndexOutOfBoundsException if the index is negative or greater than size()-1
 	 */
-         public Position<E> positionAtIndex(int i) throws IndexOutOfBoundsException { 
-                 checkIndex(i,size()); // checks whether the given index is in the range [0, size()-1].
+	public Position<E> positionAtIndex(int i) throws IndexOutOfBoundsException {
+		checkIndex(i,size()); // checks whether the given index is in the range [0, size()-1].
+		Position<E> result = first();
+		for (int j = 0; j < i; j++) {
+			result = after(result);
+		}
+		return result;
+	}
 
-                 /******* add your code here **********/
-
-                 return null; //dummy return
-          } 
-	
-      /**
+	/**
         * returns index corresponding to position
         * since need to hop through elements of this LinkedPositionalList to get to position pos time is O(n)
         * @param pos - the position or cell you must located in this LinkedPositionalList
@@ -38,9 +39,23 @@ public class LinkedSequence<E> extends LinkedPositionalList<E> implements Sequen
         * 
         */
 	public int indexAtPosition(Position<E> pos) {
-		
-                  /******* add your code here **********/
-		 return 0; //dummy return
+
+		if (pos == null) {
+			return -1;
+		}
+
+		Position<E> pointer = first();
+		int index = 0;
+		while (pointer != null && pointer != pos) {
+			pointer = after(pointer);
+			index++;
+		}
+		if (pointer == pos) {
+			return index;
+		} else {
+			return -1;
+		}
+
 	} 
 
        /**
@@ -50,9 +65,8 @@ public class LinkedSequence<E> extends LinkedPositionalList<E> implements Sequen
          * @throws IndexOutOfBoundsException if the index is negative or greater than size()-1
 	 */
 	public E get(int i) throws IndexOutOfBoundsException { // gets element at index i
-		
-                 /******* add your code here **********/
-		 return null;
+		Position<E> aim = positionAtIndex(i);
+		return aim.getElement();
 	}
 	
 	/**
@@ -63,9 +77,10 @@ public class LinkedSequence<E> extends LinkedPositionalList<E> implements Sequen
 	  * @throws IndexOutOfBoundsException if the index is negative or greater than size()-1
 	  */
 	public E set(int i, E e) throws IndexOutOfBoundsException { // replaces the element at index i with e
-
-               /******* add your code here **********/
-               return null;
+		Position<E> aim = positionAtIndex(i);
+		E old = aim.getElement();
+        set(aim, e);
+		return old;
 	}
 	
 	/**
@@ -76,8 +91,16 @@ public class LinkedSequence<E> extends LinkedPositionalList<E> implements Sequen
 	  * @param  e   the new element to be stored
 	  * @throws IndexOutOfBoundsException if the index is negative or greater than size()
 	  */
-	public void add(int i, E e){ // insert a new element which will have index i 
-		 /******* add your code here **********/
+	public void add(int i, E e){ // insert a new element which will have index i
+		checkIndex(i,size() + 1);
+
+		if (isEmpty() || i == 0){
+			addFirst(e);
+		} else if (i == size()){
+			addLast(e);
+		} else {
+			addBefore(positionAtIndex(i), e);
+		}
    
 	}
 	
@@ -90,10 +113,12 @@ public class LinkedSequence<E> extends LinkedPositionalList<E> implements Sequen
 	  */
 	public E remove(int i) throws IndexOutOfBoundsException { // remove element with index i
 
-		/******* add your code here **********/
+		checkIndex(i,size());
+		Position<E> aim = positionAtIndex(i);
+		E el = aim.getElement();
+		remove(aim);
+		return el;
 
-                E el=null;    // dummy commands to be removed 
-                return el; // dummy commands to be removed
 	}
 	
 	  // utility methods

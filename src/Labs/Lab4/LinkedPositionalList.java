@@ -127,6 +127,7 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
   private int size = 0;                         // number of elements in the list
 
   /** Constructs a new empty list. */
+  // constructor：有dummyNodes头尾
   public LinkedPositionalList() {
     header = new Node<>(null, null, null);      // create header
     trailer = new Node<>(null, header, null);   // trailer is preceded by header
@@ -183,6 +184,7 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
    * @return the first Position in the list (or null, if empty)
    */
   @Override
+  // 返回第一个Node
   public Position<E> first() {
     return position(header.getNext());
   }
@@ -193,6 +195,7 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
    * @return the last Position in the list (or null, if empty)
    */
   @Override
+  // 返回最后一个Node
   public Position<E> last() {
     return position(trailer.getPrev());
   }
